@@ -79,7 +79,7 @@ You can download pre-train model, datasets and Docker image [here][safeuav/data]
 ```
 Run
 ```bash
-    docker run --privileged --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -v "$(pwd)/data:/SafeUAV/data" -it safeuav:latest 
+    docker run --privileged --runtime=nvidia --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -v "$(pwd)/data:/SafeUAV/data" -it safeuav:latest
 ```
 
 
