@@ -1,8 +1,9 @@
 ARG ARCH=amd64
 FROM nvcr.io/nvidia/l4t-pytorch:r32.5.0-pth1.7-py3 AS arm64
 FROM nvcr.io/nvidia/l4t-pytorch:r32.5.0-pth1.7-py3 AS aarch64 
-FROM nvcr.io/nvidia/pytorch:24.02-py3 AS amd64
-FROM nvcr.io/nvidia/pytorch:24.02-py3 AS x86_64
+#TODO test that these work
+FROM nvcr.io/nvidia/pytorch:20.10-py3 AS amd64 
+FROM nvcr.io/nvidia/pytorch:20.10-py3 AS x86_64
 FROM ${ARCH}
 
 
