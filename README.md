@@ -75,11 +75,11 @@ Docker version >= 20.10.
 You can download pre-train model, datasets and Docker image [here][safeuav/data].
 
 
-    $ docker build -t <repository> docker/
+    $ docker build --build-arg ARCH=$(uname -m) docker/ -t safeuav
 
 Run
+    $ docker run --privileged --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -v "$(pwd)/data:/SafeUAV/data" -it safeuav:latest 
 
-    $ docker run --privileged --gpus all --it -v <data>:/SafeUAV/SafeUAV/data <repository>
 
 
 [safeuav/data]: <https://aistmail-my.sharepoint.com/:f:/r/personal/ishitsuka_hikaru_aist_go_jp/Documents/aipj/data/SafeUAV?csf=1&web=1&e=AdgeZI>

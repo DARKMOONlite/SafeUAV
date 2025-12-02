@@ -1,9 +1,15 @@
-FROM nvcr.io/nvidia/l4t-pytorch:r32.5.0-pth1.7-py3
+ARG ARCH=amd64
+FROM nvcr.io/nvidia/l4t-pytorch:r32.5.0-pth1.7-py3 AS arm64
+FROM nvcr.io/nvidia/l4t-pytorch:r32.5.0-pth1.7-py3 AS x86_64
+FROM nvcr.io/nvidia/pytorch:24.02-py3 AS amd64
+FROM nvcr.io/nvidia/pytorch:24.02-py3 AS aarch64
+FROM ${ARCH}
 
-WORKDIR /SafeUAV
 
-ENV TZ=Asia/Tokyo
+ENV WORKDIR=/SafeUAV
+ENV TZ=Australia/Sydney
 ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR ${WORKDIR}
 
 COPY requirements.txt $WORKDIR
 # COPY datasets/ $WORKDIR
@@ -23,8 +29,9 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y \
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
+RUN git clone https://github.com/DARKMOONlite/SafeUAV-ROS2.git
 # RUN git clone https://gitlab.com/mihaicristianpirvu/SafeUAV.git
-RUN git clone https://github.com/ishitsuka-hikaru/SafeUAV.git
+# RUN git clone https://github.com/ishitsuka-hikaru/SafeUAV.git
 # RUN git clone https://gitlab.com/mihaicristianpirvu/neural-wrappers.git
 # RUN cd neural-wrappers && \
 #     git checkout 3dcc404b08f0e356904d1a1dd16382c3ae4aa752 && \

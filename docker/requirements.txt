@@ -1,4 +1,4 @@
-numpy==1.19.4
+numpy<2.0
 matplotlib
 prefetch_generator
 scipy
