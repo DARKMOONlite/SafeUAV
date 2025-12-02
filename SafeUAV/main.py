@@ -142,7 +142,7 @@ def main():
 	print(reader.summary())
 
 	if args.type == "test_dataset":
-		from test_dataset import testDataset
+		from test.test_dataset import testDataset
 		testDataset(reader, args)
 		sys.exit(0)
 

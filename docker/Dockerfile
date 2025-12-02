@@ -29,7 +29,7 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y \
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
-RUN git clone https://github.com/DARKMOONlite/SafeUAV-ROS2.git
+RUN git clone https://github.com/DARKMOONlite/SafeUAV.git
 # RUN git clone https://gitlab.com/mihaicristianpirvu/SafeUAV.git
 # RUN git clone https://github.com/ishitsuka-hikaru/SafeUAV.git
 # RUN git clone https://gitlab.com/mihaicristianpirvu/neural-wrappers.git
