@@ -73,14 +73,19 @@ python main_inference_video.py regression in_video.mp4 out_video.mp4 --model=$mo
 Docker version >= 20.10.
 
 You can download pre-train model, datasets and Docker image [here][safeuav/data].
-
+### Building the Image
 ```bash
     docker build --build-arg ARCH=$(uname -m) docker/ -t safeuav
 ```
-Run
+
+
+### Run on Jetson
 ```bash
     docker run --privileged --runtime=nvidia --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 -v "$(pwd)/data:/SafeUAV/data" -it safeuav:latest
 ```
-
+### Run on PC
+```bash
+    docker run --privileged --gpus all -v "$(pwd)/data:/SafeUAV/data" -it safeuav:latest
+```
 
 [safeuav/data]: <https://aistmail-my.sharepoint.com/:f:/r/personal/ishitsuka_hikaru_aist_go_jp/Documents/aipj/data/SafeUAV?csf=1&web=1&e=AdgeZI>
