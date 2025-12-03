@@ -34,8 +34,8 @@ You can download pre-train model, datasets and Docker image [here][safeuav/data]
 ## Standard variables
 ```bash
 
-export model= "unet_tiny_sum" #unet_tiny_sum/unet_big_concatenate/deeplabv3plus/unet_classic  # pick one
-export dir="data" # this folder should not exist
+export model= "unet_tiny_sum" #unet_tiny_sum/unet_big_concatenate (I dont think these two work /deeplabv3plus/unet_classic )  # pick one
+export dir="/SafeUAV/data/results" # this folder should not exist
 export lr=0.001
 export patience=4
 export factor=0.1
