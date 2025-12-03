@@ -4,6 +4,8 @@ FROM nvcr.io/nvidia/l4t-pytorch:r32.5.0-pth1.7-py3 AS aarch64
 #TODO test that these work
 FROM nvcr.io/nvidia/pytorch:20.10-py3 AS amd64 
 FROM nvcr.io/nvidia/pytorch:20.10-py3 AS x86_64
+# FROM nvcr.io/nvidia/pytorch:20.12-py3 AS amd64 
+# FROM nvcr.io/nvidia/pytorch:20.12-py3 AS x86_64
 FROM ${ARCH}
 
 
@@ -18,8 +20,8 @@ COPY requirements.txt $WORKDIR
 # COPY videos/ $WORKDIR
 
 RUN apt-get update && apt-get -y upgrade && apt-get install -y \
-    python3-opencv \
-    python3-h5py \
+    python3.7 \
+    python3.7-distutils \
     emacs \
     cmake \
     build-essential \
@@ -27,8 +29,12 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y \
     libpng-dev \
     ffmpeg
 
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
+#install the correct python version
+RUN curl -sS https://bootstrap.pypa.io/pip/3.7/get-pip.py -o get-pip.py 
+RUN python3.7 get-pip.py
+
+RUN pip3.7 install --upgrade pip
+RUN pip3.7 install -r requirements.txt
 
 RUN git clone https://github.com/DARKMOONlite/SafeUAV.git
 # RUN git clone https://gitlab.com/mihaicristianpirvu/SafeUAV.git
@@ -38,3 +44,4 @@ RUN git clone https://github.com/DARKMOONlite/SafeUAV.git
 #     git checkout 3dcc404b08f0e356904d1a1dd16382c3ae4aa752 && \
 #     cd $WORKDIR
 RUN git clone https://github.com/ishitsuka-hikaru/neural-wrappers.git
+ENV PYTHONPATH=${PYTHONPATH:-}:/SafeUAV/neural-wrappers

@@ -126,7 +126,8 @@ def getMetrics(args, reader):
 	return metrics
 
 def changeDirectory(Dir, expectExist):
-	assert os.path.exists(Dir) == expectExist
+	assert os.path.exists(Dir) == expectExist and os.path.exists(Dir) == True, "Warning folder passed by dir exists, please change or remove it before running train or testing"
+	assert os.path.exists(Dir) == expectExist, "warning, attempting to retrain in a folder that doesn't exist"	
 	print("Changing to working directory:", Dir)
 	if expectExist == False:
 		os.makedirs(Dir)

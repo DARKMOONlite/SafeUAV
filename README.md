@@ -2,75 +2,11 @@
 
 This repository holds the implementation of the paper, presented at the UAVision2018 workshop (ECCV).
 
-https://sites.google.com/site/aerialimageunderstanding/safeuav-learning-to-estimate-depth-and-safe-landing-areas-for-uavs (for checkpoints, paper and other information).
-
-## Standard variables
-```sh
-model=unet_tiny_sun/unet_big_concatenate/deeplabv3plus/unet_classic (pick one)
-dir=test_dir
-lr=0.001
-patience=4
-factor=0.1
-num_epochs=100
-```
-
-# Training a model
-
-## HVO
-
-```sh
-python main.py train classification /path/to/dataset.h5 --model=$model --dir=$dir --label_dims=hvn_gt_p1 --batch_size=N --optimizer=Adam --learning_rate=$lr --patience=$patience --factor=$factor --num_epochs=$num_epochs
-```
-
-## Depth
-
-```sh
-python main.py train regression /path/to/dataset.h5 --model=$model --dir=$dir --label_dims=depth --batch_size=N --optimizer=Adam --learning_rate=$lr --patience=$patience --factor=$factor --num_epochs=$num_epochs
-```
+# Installation:
+> [!INFO]
+> use Docker version >= `20.10`.
 
 
-# Running a pre-trained model
-
-## HVO
-
-```sh
-python main.py test classification /path/to/dataset.h5 --model=$model --weights_file=/path/to/checkpoint.pkl --test_plot_results=1 --label_dims=hvn_gt_p1 --batch_size=N
-```
-
-## Depth
-
-```sh
-python main.py test regression /path/to/dataset.h5 --model=$model --weights_file=/path/to/checkpoint.pkl --test_plot_results=1 --label_dims=depth --batch_size=N
-```
-
-# Running on an existing video (outputs another video)
-
-## HVO
-```sh
-python main_inference_video.py classification in_video.mp4 out_video.mp4 --model=$model --weights_file=/path/to/checkpoint.pkl
-```
-
-## Depth
-```sh
-python main_inference_video.py regression in_video.mp4 out_video.mp4 --model=$model --weights_file=/path/to/checkpoint.pkl
-```
-
-# Installation for Jetson
-
-    $ sudo apt update && sudo apt -y upgrade
-    $ sudo apt -y install < packages.txt
-
-    $ pip3 install --upgrade pip
-    $ pip3 install -r requirements.txt
-
-    $ cd ..
-    $ git clone https://gitlab.com/mihaicristianpirvu/neural-wrappers.git
-    $ cd neural-wrappers
-    $ git checkout 3dcc404b08f0e356904d1a1dd16382c3ae4aa752
-
-
-## Use Docker Image
-Docker version >= 20.10.
 
 You can download pre-train model, datasets and Docker image [here][safeuav/data].
 ### Building the Image
@@ -87,5 +23,65 @@ You can download pre-train model, datasets and Docker image [here][safeuav/data]
 ```bash
     docker run --privileged --gpus all -v "$(pwd)/data:/SafeUAV/data" -it safeuav:latest
 ```
+> [!TIP]
+> to train on the dataset or a specific video feed, place them into the data folder. 
+> The dataset can be downloaded [here](https://www.google.com/url?q=https%3A%2F%2Fctipub-my.sharepoint.com%2F%3Af%3A%2Fg%2Fpersonal%2Fdragos_costea_upb_ro%2FEnDVg5UkHhpHmNXjQ_QnpwEBwi5cXUOiNH476vOObd1GBw%3Fe%3DwWnDXM&sa=D&sntz=1&usg=AOvVaw15C4Wq1Ay14P1YBRZ4XTbc)
+> Models can be downloaded from [here](https://sites.google.com/site/aerialimageunderstanding/safeuav-learning-to-estimate-depth-and-safe-landing-areas-for-uavs)
 
-[safeuav/data]: <https://aistmail-my.sharepoint.com/:f:/r/personal/ishitsuka_hikaru_aist_go_jp/Documents/aipj/data/SafeUAV?csf=1&web=1&e=AdgeZI>
+
+
+
+## Standard variables
+```bash
+
+export model= "unet_tiny_sum" #unet_tiny_sum/unet_big_concatenate/deeplabv3plus/unet_classic  # pick one
+export dir="data" # this folder should not exist
+export lr=0.001
+export patience=4
+export factor=0.1
+export num_epochs=100
+export batch_size=4
+```
+
+# Options
+1. **Train:** trains the model
+2. **Test:** tests the model to obtain results.
+3. **Retrain:** I assume this is for retraining a model that already exists.
+
+# HVO vs Depth
+- if wanting to train/test the depth estimation model please choose **regression**
+- if wanting to train/test the landing zone detection please choose **classification**
+
+# Training or Testing a model
+## Training:
+modify any of the environment variables as needed to get your desired outcome.
+```sh
+python3.7 main.py train {classification/regression} {path to dataset.h5} 
+--model=$model \
+--dir=$dir \
+--label_dims="hvn_gt_p1" \
+--batch_size=$batch_size \
+--optimizer="Adam" \
+--learning_rate=$lr \
+--patience=$patience \
+--factor=$factor \
+--num_epochs=$num_epochs
+```
+## Testing
+```bash
+python3.7 main.py test {classification/regression} {path to dataset.h5} \
+--weights_file={path to checkpoint.pkl} \
+--model=$model \
+--test_plot_results=1 \ 
+--label_dims="hvn_gt_p1" \
+--batch_size=$batch_size
+```
+
+## Running on an existing video (outputs another video)
+
+```sh
+python3.7 main_inference_video.py {classification/regression} in_video.mp4 out_video.mp4 \
+--weights_file= {path to checkpoint file.pkl} \
+--model=$model
+
+```

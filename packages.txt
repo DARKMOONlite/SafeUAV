@@ -1,6 +1,4 @@
-python3-h5py
-python3-opencv
-python3-pip
+
 libjpeg-dev
 libpng-dev
 ffmpeg

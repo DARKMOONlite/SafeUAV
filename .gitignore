@@ -3,4 +3,6 @@
 __pycache__
 /.trash/
 /.test/
-/data/
+*.zip
+*.h5
+*.pkl
