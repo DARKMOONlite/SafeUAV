@@ -3,12 +3,12 @@
 This repository holds the implementation of the paper, presented at the UAVision2018 workshop (ECCV).
 
 # Installation:
-> [!INFO]
+> [!NOTE]
 > use Docker version >= `20.10`.
 
 
 
-You can download pre-train model, datasets and Docker image [here][safeuav/data].
+
 ### Building the Image
 ```bash
     docker build --build-arg ARCH=$(uname -m) docker/ -t safeuav
