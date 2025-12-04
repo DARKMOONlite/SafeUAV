@@ -56,7 +56,7 @@ export batch_size=4
 ## Training:
 modify any of the environment variables as needed to get your desired outcome.
 ```sh
-python3.7 main.py train {classification/regression} {path to dataset.h5} 
+python3.7 main.py train {classification/regression} {path to dataset.h5} \
 --model=$model \
 --dir=$dir \
 --label_dims="hvn_gt_p1" \
